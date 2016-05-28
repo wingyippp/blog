@@ -7,7 +7,7 @@
 
 # Site settings
 title: Code makes a different.
-email: your-email@domain.com
+email: wing.ye.zhenrong@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Keep Walking. Keep Improving.
 baseurl: "/blog" # the subpath of your site, e.g. /blog
