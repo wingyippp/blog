@@ -4,6 +4,8 @@ title:  "[leetcode]283. Move Zeroes"
 date:   2016-05-28 14:53:48 +0800
 categories: jekyll update
 ---
+[leetcode 283. Move Zeroes][leetcode_283_Move_Zeroes]
+
 >Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 >For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
 
@@ -47,3 +49,5 @@ public class Solution {
     }
 }
 {% endhighlight %}
+
+[leetcode_283_Move_Zeroes]: https://leetcode.com/problems/move-zeroes/
