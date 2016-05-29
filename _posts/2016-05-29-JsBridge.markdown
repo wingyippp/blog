@@ -7,7 +7,7 @@ categories: Android
 
 It's common to show web page using WebView in native App. And there are a few ways to communicate with JavaScript and native code. `JsBridge` is one of the most favourite solutions.
 
-# 1. JavaScript calls Java, Java calls JavaScript
+## 1 JavaScript calls Java, Java calls JavaScript
 There are 4 approaches to let JavaScript calls Java in Android:
 1.JavascriptInterface;
 2.WebViewClient.shouldOverrideUrlLoading();
@@ -98,7 +98,7 @@ Different from JavaScript calls Java, there is only one way to call JavaScript b
 webView.loadUrl(String.format("javascript:WebViewJavascriptBridge._handleMessageFromNative(%s)", data));
 {% endhighlight %}
 
-# 2. JsBridge
+## 2 JsBridge
 I'm going to introduce a [GitHub Android project: JsBridge][jsbrige_github].
 
 ## 2.1 flow char of JsBridge
