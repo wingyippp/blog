@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "[Android] JsBridge, JavaScript and Java call each other"
+date:   2016-05-29 12:55:00 +0800
+categories: Android
+---
+
+It's common to show web page using WebView in native App. And there are a few ways to communicate with JavaScript and native code. `JsBridge` is one of the most favourite solutions.
+
+## 1. JavaScript calls Java, Java calls JavaScript
+There are 4 approaches to let JavaScript calls Java in Android:
+1.JavascriptInterface;
+2.WebViewClient.shouldOverrideUrlLoading();
+3.WebChromeClient.onConsoleMessage();
+4.WebChromeClient.onJsPrompt();
+
+### 1.1 JavascriptInterface
+This is the official approach providing by Google.
+First, write a class with some kinds of method, which might be called by JavaScript.
+{% highlight java%}
+public class JavascriptInterface {
+
+    @JavascriptInterface
+    public void showToast(String toast) {
+        Toast.makeText(MainActivity.this, toast, Toast.LENGTH_SHORT).show();
+    }
+}
+{% endhighlight %}
+
+Then, add this class into the WebView with `addJavascriptInterface()` method.
+{% highlight java%}
+webView.addJavascriptInterface(new JavascriptInterface(), "javascriptInterface");
+{% endhighlight %}
+
+Therefore, JavaScript is able to invoke the `showToast()` native method.
+{% highlight javascript%}
+function showToast(toast) {
+    javascript:javascriptInterface.showToast(toast);
+}
+{% endhighlight %}
+
+However, this official approach has a deadly security issue, until Android 4.2 provides the `@JavascriptInterface` annotation. Considering the lower Android version compability, it's not recommended to use it.
+
+### 1.2 WebViewClient.shouldOverrideUrlLoading()
