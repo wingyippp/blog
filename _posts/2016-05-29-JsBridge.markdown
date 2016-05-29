@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Android] JsBridge, JavaScript and Java call each other"
+title:  "[Android] JsBridge. JavaScript and Java call each other"
 date:   2016-05-29 12:55:00 +0800
 categories: Android
 ---
@@ -42,3 +42,60 @@ function showToast(toast) {
 However, this official approach has a deadly security issue, until Android 4.2 provides the `@JavascriptInterface` annotation. Considering the lower Android version compability, it's not recommended to use it.
 
 ### 1.2 WebViewClient.shouldOverrideUrlLoading()
+This API will be called whenever the web page is loading the Url. So that we can take advantage of this interface to let the web page to load a customized Url and then the `shouldOverrideUrlLoading` will invoke in the Java. Parse the Url and identify whether it is a normal Url jumping or the JavaScript is communicating with Java.
+{% highlight java%}
+public class CustomWebViewClient extends WebViewClient {
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if (isJsBridgeUrl(url)) {
+            // handle your logic here
+            return true;
+        }
+        return super.shouldOverrideUrlLoading(view, url);
+    }
+}
+{% endhighlight %}
+
+### 1.3 WebChromeClient.onConsoleMessage()
+This API uses for debuging when JavaScript want to print log in the native console. In JavaScript, we can use it like this.
+{% highlight javascript%}
+console.log('log message that is going to native code')
+{% endhighlight %}
+And then it will trigger WebChromeClient.consoleMessage() in Java.
+{% highlight java%}
+public class CustomWebChromeClient extends WebChromeClient {
+
+    @Override
+    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+        super.onConsoleMessage(consoleMessage);
+        //the value that is set in console.log in JavaScript
+        String msg = consoleMessage.message();
+    }
+}
+{% endhighlight %}
+
+### 1.4 WebChromeClient.onJsPrompt()
+In face, there are onJsPrompt(), onJsAlert(), onJsConfirm() and onJsPrompt() in JavaScript. Because onJsPrompt is seldomly used, it's suggested to use it as a approach to let JavaScript call Java. Make this call in JavaScript.
+{% highlight javascript%}
+window.prompt(message, value);
+{% endhighlight %}
+Then WebChromeClient.onJsPrompt() will be called in Java.
+{% highlight java%}
+public class CustomWebChromeClient extends WebChromeClient {
+
+    @Override
+    public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+        result.confirm();
+        return true;
+    }
+}
+{% endhighlight %}
+
+### 1.5 Java calls JavaScript
+Different from JavaScript calls Java, there is only one way to call JavaScript by Java, which is the WebView.loadUrl(). To call a JavaScript method with params, we can do it like this.
+{% highlight java%}
+webView.loadUrl(String.format("javascript:WebViewJavascriptBridge._handleMessageFromNative(%s)", data));
+{% endhighlight %}
+
+## 2. JsBridge
