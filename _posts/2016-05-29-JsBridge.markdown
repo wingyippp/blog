@@ -102,7 +102,7 @@ webView.loadUrl(String.format("javascript:WebViewJavascriptBridge._handleMessage
 I'm going to introduce a [GitHub Android project: JsBridge][jsbrige_github].
 
 ## 2.1 flow char of JsBridge
-![Alt text](http://tse4.mm.bing.net/th?id=OIP.Md91aba05e79000eacf843cdd963142d7H0&pid=15.1)
+![Alt text](https://raw.githubusercontent.com/wingyippp/blog/gh-pages/images/jsbridge_work_flow.jpg)
 
 ## 2.2 UML of the JsBridge
 ![Alt text](https://raw.githubusercontent.com/wingyippp/blog/gh-pages/images/1461754727_5_w1028_h502.jpg)
