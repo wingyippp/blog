@@ -2,7 +2,7 @@
 layout: post
 title:  "[leetcode]283. Move Zeroes"
 date:   2016-05-28 14:53:48 +0800
-categories: jekyll update
+categories: leetcode
 ---
 [leetcode 283. Move Zeroes][leetcode_283_Move_Zeroes]
 
